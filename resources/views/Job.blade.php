@@ -15,7 +15,6 @@
                             src="{{asset('images/no-image.png')}}"
                             alt=""
                         />
-
                         <h3 class="text-2xl mb-2">{{$job->title}}</h3>
                         <div class="text-xl font-bold mb-4">{{$job->company}}</div>
                         <ul class="flex">
