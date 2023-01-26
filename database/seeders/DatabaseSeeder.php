@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\Models\Jobs;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -15,10 +16,22 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        \App\Models\User::factory(10)->create();
+        $user = User::factory()->create();
+
+        Jobs::factory(10)->create(
+            [
+                'user_id' => $user->id
+            ]
+        );
+
+
+
+
+
         Jobs::create([
             'title' => 'Laravel Senior Developer',
             'tags' => 'laravel, javascript',
+            'user_id' => $user->id,
             'company' => 'Acme Corp',
             'location' => 'Boston, MA',
             'email' => 'email1@email.com',
@@ -27,6 +40,7 @@ class DatabaseSeeder extends Seeder
         ]);
         Jobs::create([
             'title' => 'Full-Stack Engineer',
+            'user_id' => $user->id,
             'tags' => 'laravel, backend ,api',
             'company' => 'Stark Industries',
             'location' => 'New York, NY',
@@ -37,13 +51,13 @@ class DatabaseSeeder extends Seeder
         Jobs::create([
             'title' => 'Laravel Developer',
             'tags' => 'laravel, vue, javascript',
+            'user_id' => $user->id,
             'company' => 'Wayne Enterprises',
             'location' => 'Gotham, NY',
             'email' => 'email3@email.com',
             'website' => 'https://www.wayneenterprises.com',
             'description' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam minima et illo reprehenderit quas possimus voluptas repudiandae cum expedita, eveniet aliquid, quam illum quaerat consequatur! Expedita ab consectetur tenetur delensiti?'
         ]);
-        Jobs::factory(7)->create();
 
         // \App\Models\User::factory()->create([
         //     'name' => 'Test User',

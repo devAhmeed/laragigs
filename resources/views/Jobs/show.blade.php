@@ -6,39 +6,18 @@
                 ><i class="fa-solid fa-arrow-left"></i> Back
             </a>
                 <div class="mx-4">
-                <div class="bg-gray-50 border border-gray-200 p-10 rounded">
+                <x-card class="p-10">
                     <div
                         class="flex flex-col items-center justify-center text-center"
                     >
                         <img
                             class="w-48 mr-6 mb-6"
-                            src="{{asset('images/no-image.png')}}"
+                            src="{{$job->logo ? asset('storage/' . $job->logo) : asset('images/no-image.png')}}"
                             alt=""
                         />
                         <h3 class="text-2xl mb-2">{{$job->title}}</h3>
                         <div class="text-xl font-bold mb-4">{{$job->company}}</div>
-                        <ul class="flex">
-                            <li
-                                class="bg-black text-white rounded-xl px-3 py-1 mr-2"
-                            >
-                                <a href="#">Laravel</a>
-                            </li>
-                            <li
-                                class="bg-black text-white rounded-xl px-3 py-1 mr-2"
-                            >
-                                <a href="#">API</a>
-                            </li>
-                            <li
-                                class="bg-black text-white rounded-xl px-3 py-1 mr-2"
-                            >
-                                <a href="#">Backend</a>
-                            </li>
-                            <li
-                                class="bg-black text-white rounded-xl px-3 py-1 mr-2"
-                            >
-                                <a href="#">Vue</a>
-                            </li>
-                        </ul>
+                        <x-job-tags :jobTags="$job->tags"/>
                         <div class="text-lg my-4">
                             <i class="fa-solid fa-location-dot"></i>{{$job->location}}
                         </div>
@@ -82,6 +61,20 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </x-card>
+                @if (auth()->id() == $job->user_id)
+                <x-card class="mt-4 p-2 flex space-x-6">
+                    <a href ="/jobs/{{$job->id}}/edit">
+                        <i class="fa-solid fa-pencil"></i> Edit </a>
+                        <form action="/jobs/{{$job->id}}" method="POST">
+                            @csrf
+                            @method("DELETE")
+
+                            <button class="text-red-500"><i class="fa-solid fa-trash"></i> Delete</button>
+                        </form>
+
+                </x-card>
+                @endif
+
             </div>
 @endsection
